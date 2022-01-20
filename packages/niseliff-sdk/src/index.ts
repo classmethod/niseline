@@ -36,6 +36,7 @@ import { buildScanCodeV2 } from './method/scan-code-v2'
 import { buildSendMessages } from './method/send-messages'
 import { buildShareTargetPicker } from './method/share-target-picker'
 import { buildSubWindow } from './method/sub-window'
+import { buildUse } from './method/use'
 import { ConsoleLogger, Logger } from './util/logger'
 
 export const buildNiseliff = (params?: {
@@ -47,15 +48,7 @@ export const buildNiseliff = (params?: {
   version?: string
   lineVersion?: string
   isInClient?: boolean
-}): Omit<
-  Liff,
-  | 'use'
-  | '_dispatchEvent'
-  | '_call'
-  | '_addListener'
-  | '_removeListener'
-  | '_postMessage'
-> => {
+}): Liff => {
   const logger: Logger = new ConsoleLogger()
   const clientEndpoint = params?.clientEndpoint ?? window.location.origin
   const niseliffServerEndpoint =
@@ -68,11 +61,11 @@ export const buildNiseliff = (params?: {
   const isInClient = params?.isInClient ?? false
 
   return {
-    getAId: buildGetAId(),
-    getProfilePlus: buildGetProfilePlus(),
-    getIsVideoAutoPlay: buildGetIsVideoAutoPlay(),
-    subWindow: buildSubWindow(),
-    isSubWindow: buildIsSubWindow(),
+    _dispatchEvent: () => {},
+    _call: async () => {},
+    _addListener: () => {},
+    _removeListener: () => {},
+    _postMessage: () => {},
     id: buildId(liffId),
     ready: buildReady(),
     init: buildInit({ logger, clientEndpoint, niseliffServerEndpoint }),
@@ -107,5 +100,11 @@ export const buildNiseliff = (params?: {
     shareTargetPicker: buildShareTargetPicker(),
     scanCode: buildScanCode(),
     scanCodeV2: buildScanCodeV2(),
+    getAId: buildGetAId(),
+    getProfilePlus: buildGetProfilePlus(),
+    getIsVideoAutoPlay: buildGetIsVideoAutoPlay(),
+    subWindow: buildSubWindow(),
+    isSubWindow: buildIsSubWindow(),
+    use: buildUse(),
   }
 }
