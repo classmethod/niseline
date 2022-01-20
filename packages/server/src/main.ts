@@ -7,7 +7,7 @@ import fastifyFormBody from 'fastify-formbody'
 import pointOfView from 'point-of-view'
 import { bootstrap } from './di/bootstrap'
 import { DI_TYPE } from './di/type'
-import { initLowDb } from './util/db/lowdb'
+import { initLowDb } from './util/db'
 
 const fastify = Fastify({
   logger: true,
