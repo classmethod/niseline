@@ -43,6 +43,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - run: npm run readme:gen
+
       - run: npm publish --access public -w packages/niseliff-sdk
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

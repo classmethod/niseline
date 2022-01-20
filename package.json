@@ -18,7 +18,8 @@
     "start:client": "npm run build -w packages/niseliff-sdk && npm run start -w sample-client-app",
     "start:server": "npm run start -w server",
     "version:new": "npm version ${VERSION} -w server -w @niseline/niseliff && npm i",
-    "clean": "rm -rf node_modules packages/**/node_modules"
+    "clean": "rm -rf node_modules packages/**/node_modules",
+    "readme:gen": "cp README.md ./packages/niseliff-sdk/README.md"
   },
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "4.1.4",
