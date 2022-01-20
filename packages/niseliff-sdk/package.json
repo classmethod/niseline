@@ -1,6 +1,6 @@
 {
   "name": "@niseline/niseliff",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -16,5 +16,16 @@
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.14.11"
-  }
+  },
+  "keywords": [
+    "line",
+    "linebot",
+    "line-api",
+    "liff",
+    "liff-sdk"
+  ],
+  "bugs": {
+    "url": "https://github.com/classmethod/niseline/issues"
+  },
+  "homepage": "https://github.com/classmethod/niseline/#readme"
 }
