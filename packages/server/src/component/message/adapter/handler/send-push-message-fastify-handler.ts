@@ -1,19 +1,13 @@
+import {
+  SendPushMessageRequestBody,
+  SendPushMessageResponseBody,
+} from '@niseline/line-api-types'
 import { RouteHandlerMethod } from 'fastify'
 import {
   UserIdInvalidError,
   SendPushMessageUseCase,
   ChannelAccessTokenInvalidError,
 } from '../../use-case/send-push-message-use-case'
-
-interface SendPushMessageRequestBody {
-  to: string // 'U4af4980629...'
-  messages: ReadonlyArray<{
-    type: string // 'text'
-    text: string // 'Hello, user'
-  }>
-}
-
-type SendPushMessageResponseBody = {}
 
 export const buildSendPushMessageFastifyHandler =
   ({
