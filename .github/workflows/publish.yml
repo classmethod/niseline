@@ -1,9 +1,6 @@
 on:
-  push:
-    tags:
-      - 'v*'
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   publish:
