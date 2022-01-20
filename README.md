@@ -25,17 +25,11 @@ import { buildNiseliff } from '@niseline/niseliff'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-declare global {
-  interface Window {
-    liff: Liff
-  }
-}
-
-window.liff = buildNiseliff({
+const liff = buildNiseliff({
   liffId: 'DUMMY_LIFF_ID',
-})
+}) as Liff
 
-window.liff
+liff
   .init({
     liffId: 'DUMMY_LIFF_ID',
   })
@@ -59,6 +53,10 @@ npm i @niseline/niseliff
 
 ### Usage
 
+#### With npm package of LIFF SDK
+
+You can use with [npm package of LIFF SDK](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#use-npm-package). Switch between the real LIFF SDK and the NiseLiff SDK for each environment. In this example, the NiseLiff SDK is used only in the local environment.
+
 ```ts
 // /path/to/config.ts
 
@@ -69,11 +67,13 @@ export const env: 'local' | 'development' | 'staging' | 'production' = 'local'
 // /path/to/liff.ts
 
 import * as config from '/path/to/config'
-import realLiff from '@line/liff'
+import realLiff, { Liff } from '@line/liff'
 import { buildNiseliff } from '@niseline/niseliff'
 
 const liff =
-  config.env === 'local' ? buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }) : realLiff
+  config.env === 'local'
+    ? (buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }) as Liff)
+    : realLiff
 export default liff
 ```
 
@@ -90,6 +90,47 @@ liff.init({ liffId: 'DUMMY_LIFF_ID' }).then(() => {
     document.getElementById('root')
   )
 })
+```
+
+#### With CDN of LIFF SDK
+
+You can also use with [CDN of LIFF SDK](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#specify-cdn-path). If you use typescript, it is recommended that you install the @line/liff package. The actual runtime is a CDN, but the type definitions are available from the npm package.
+
+```ts
+// /path/to/config.ts
+
+export const env: 'local' | 'development' | 'staging' | 'production' = 'local'
+```
+
+```tsx
+// /path/to/index.tsx
+
+import * as config from '/path/to/config'
+import { Liff } from '@line/liff'
+import { buildNiseliff } from '@niseline/niseliff'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+declare global {
+  var liff: Liff
+}
+
+if (config.env === 'local') {
+  window.liff = buildNiseliff({
+    liffId: 'DUMMY_LIFF_ID',
+  }) as Liff
+}
+
+window.liff
+  .init({
+    liffId: 'DUMMY_LIFF_ID',
+  })
+  .then(() => {
+    ReactDOM.render(
+      <React.StrictMode>Your client app</React.StrictMode>,
+      document.getElementById('root')
+    )
+  })
 ```
 
 ### Features
