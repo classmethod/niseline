@@ -1,16 +1,10 @@
+import { GetFriendshipStatusResponseBody } from '@niseline/line-api-types'
 import { RouteHandlerMethod } from 'fastify'
 import { ErrorResponseBody } from '../../../../util/handler'
 import {
   FindUserUseCase,
   UserNotFoundError,
 } from '../../use-case/find-user-use-case'
-
-/**
- * https://developers.line.biz/ja/reference/line-login/#get-user-profile
- */
-interface GetFriendshipStatus {
-  friendFlag: boolean
-}
 
 export const buildFriendshipStatusFastifyHandler =
   (findUserUseCase: FindUserUseCase): RouteHandlerMethod =>
@@ -29,5 +23,5 @@ export const buildFriendshipStatusFastifyHandler =
     reply.type('application/json').code(200)
     return {
       friendFlag: true,
-    } as GetFriendshipStatus
+    } as GetFriendshipStatusResponseBody
   }
