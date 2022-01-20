@@ -1,0 +1,52 @@
+{
+  "name": "niseline",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "dyoshikawa",
+  "license": "MIT",
+  "scripts": {
+    "build": "docker build -t dyoshikawa/niseline:latest .",
+    "publish": "docker push dyoshikawa/niseline:latest",
+    "format": "prettier --write .",
+    "format:check": "prettier -c .",
+    "lint:secret": "secretlint '**/*'",
+    "prepare": "husky install",
+    "postinstall": "npm run prepare",
+    "check": "npm run lint:secret && npm run format:check && npm run lint:js --workspaces && npm run typec --workspaces",
+    "start:client": "npm run build -w packages/niseliff-sdk && npm run start -w sample-client-app",
+    "start:server": "npm run start -w server",
+    "version:new": "npm version ${VERSION} -w server -w @niseline/niseliff && npm i",
+    "clean": "rm -rf node_modules packages/**/node_modules"
+  },
+  "devDependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "4.1.4",
+    "@tsconfig/recommended": "1.0.1",
+    "@typescript-eslint/eslint-plugin": "5.9.1",
+    "@typescript-eslint/parser": "5.9.1",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "7.0.4",
+    "lint-staged": "12.1.7",
+    "prettier": "2.5.1",
+    "secretlint": "4.1.4",
+    "typescript": "4.5.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "volta": {
+    "node": "16.13.1",
+    "npm": "8.3.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "bash -c 'npm run lint:secret'",
+      "bash -c 'npm run format'",
+      "bash -c 'npm run lint:js:fix --workspaces'",
+      "bash -c 'npm run typec --workspaces'"
+    ]
+  }
+}

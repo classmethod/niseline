@@ -1,0 +1,4 @@
+{
+  "extends": ["plugin:tailwindcss/recommended", "../../.eslintrc.json"],
+  "plugins": []
+}

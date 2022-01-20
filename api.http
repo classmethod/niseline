@@ -1,0 +1,71 @@
+@BASE_URL=http://localhost:3000
+
+###
+
+GET {{ BASE_URL }}/niseline/api/ping
+
+###
+
+POST {{ BASE_URL }}/niseline/api/users
+Content-Type: application/json
+
+{
+    "id": "FOO_ID",
+    "name": "Foo",
+    "picture": "http://example.com/foo.jpg",
+    "email": "foo@example.com"
+}
+
+###
+
+GET {{ BASE_URL }}/niseline/api/users/DEFAULT_USER
+Content-Type: application/json
+
+###
+
+POST {{ BASE_URL }}/oauth2/v2.1/verify
+Content-Type: application/x-www-form-urlencoded
+
+id_token=DEFAULT_USER&client_id=1234567890
+
+###
+
+GET {{ BASE_URL }}/oauth2/v2.1/verify?access_token=DEFAULT_USER
+
+###
+
+GET {{ BASE_URL }}/v2/profile
+Authorization: Bearer DEFAULT_USER
+
+###
+
+GET {{ BASE_URL }}/friendship/v1/status
+Authorization: Bearer DEFAULT_USER
+
+###
+
+POST {{ BASE_URL }}/v2/bot/message/reply
+Content-Type: application/json
+Authorization: Bearer DEFAULT_CHANNEL_ACCESS_TOKEN
+
+{
+    "replyToken": "DEFAULT_USER",
+    "messages": [{
+        "type": "text",
+        "text": "Hello NiseLine!"
+    }]
+}
+
+###
+
+POST {{ BASE_URL }}/v2/bot/message/push
+Content-Type: application/json
+Authorization: Bearer DEFAULT_CHANNEL_ACCESS_TOKEN
+
+{
+    "to": "DEFAULT_USER",
+    "messages": [{
+        "type": "text",
+        "text": "Hello NiseLine!"
+    }]
+}

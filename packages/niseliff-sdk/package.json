@@ -1,0 +1,20 @@
+{
+  "name": "@niseline/niseliff",
+  "version": "0.5.0",
+  "private": false,
+  "main": "dist/index.js",
+  "dependencies": {
+    "@line/liff": "2.18.1"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --sourcemap --format=esm --outfile=dist/index.js && tsc --emitDeclarationOnly --outDir dist",
+    "lint:js": "eslint --cache '**/*.{js,ts}'",
+    "lint:js:fix": "eslint --cache --fix '**/*.{js,ts}'",
+    "typec": "tsc --noEmit"
+  },
+  "author": "dyoshikawa",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.14.11"
+  }
+}
