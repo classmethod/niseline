@@ -71,9 +71,7 @@ import realLiff, { Liff } from '@line/liff'
 import { buildNiseliff } from '@niseline/niseliff'
 
 const liff =
-  config.env === 'local'
-    ? (buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }))
-    : realLiff
+  config.env === 'local' ? buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }) : realLiff
 export default liff
 ```
 
