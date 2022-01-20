@@ -16,7 +16,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build -w packages/niseliff-sdk
+      - run: npm run build -w packages/niseliff-sdk -w packages/line-api-types
 
       - run: npm run check
 
