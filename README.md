@@ -27,7 +27,7 @@ import ReactDOM from 'react-dom'
 
 const liff = buildNiseliff({
   liffId: 'DUMMY_LIFF_ID',
-}) as Liff
+})
 
 liff
   .init({
@@ -72,7 +72,7 @@ import { buildNiseliff } from '@niseline/niseliff'
 
 const liff =
   config.env === 'local'
-    ? (buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }) as Liff)
+    ? (buildNiseliff({ liffId: 'DUMMY_LIFF_ID' }))
     : realLiff
 export default liff
 ```
@@ -118,7 +118,7 @@ declare global {
 if (config.env === 'local') {
   window.liff = buildNiseliff({
     liffId: 'DUMMY_LIFF_ID',
-  }) as Liff
+  })
 }
 
 window.liff
