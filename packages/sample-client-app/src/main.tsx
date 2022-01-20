@@ -6,11 +6,11 @@ import { App } from './app'
 import './main.css'
 
 declare global {
-  interface Window {
-    liff: Liff
-  }
+  // eslint-disable-next-line vars-on-top, no-var
+  var liff: Liff
 }
 
+// eslint-disable-next-line vars-on-top, no-var
 window.liff = buildNiseliff() as Liff
 
 window.liff
