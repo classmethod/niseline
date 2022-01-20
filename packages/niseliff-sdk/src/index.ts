@@ -8,6 +8,7 @@ import { buildGetContext } from './method/get-context'
 import { buildGetDecodedIdToken } from './method/get-decoded-id-token'
 import { buildGetFriendship } from './method/get-friendship'
 import { buildGetIdToken } from './method/get-id-token'
+import { buildGetIsVideoAutoPlay } from './method/get-is-video-auto-play'
 import { buildGetLanguage } from './method/get-language'
 import { buildGetLineVersion } from './method/get-line-version'
 import { buildGetOs } from './method/get-os'
@@ -20,6 +21,7 @@ import { buildInitPlugins } from './method/init-plugins'
 import { buildIsApiAvailable } from './method/is-api-available'
 import { buildIsInClient } from './method/is-in-client'
 import { buildIsLoggedIn } from './method/is-logged-in'
+import { buildIsSubWindow } from './method/is-sub-window'
 import { buildLogin } from './method/login'
 import { buildLogout } from './method/logout'
 import { buildOpenWindow } from './method/open-window'
@@ -33,6 +35,7 @@ import { buildScanCode } from './method/scan-code'
 import { buildScanCodeV2 } from './method/scan-code-v2'
 import { buildSendMessages } from './method/send-messages'
 import { buildShareTargetPicker } from './method/share-target-picker'
+import { buildSubWindow } from './method/sub-window'
 import { ConsoleLogger, Logger } from './util/logger'
 
 export const buildNiseliff = (params?: {
@@ -46,9 +49,6 @@ export const buildNiseliff = (params?: {
   isInClient?: boolean
 }): Omit<
   Liff,
-  | 'getIsVideoAutoPlay'
-  | 'subWindow'
-  | 'isSubWindow'
   | 'use'
   | '_dispatchEvent'
   | '_call'
@@ -70,6 +70,9 @@ export const buildNiseliff = (params?: {
   return {
     getAId: buildGetAId(),
     getProfilePlus: buildGetProfilePlus(),
+    getIsVideoAutoPlay: buildGetIsVideoAutoPlay(),
+    subWindow: buildSubWindow(),
+    isSubWindow: buildIsSubWindow(),
     id: buildId(liffId),
     ready: buildReady(),
     init: buildInit({ logger, clientEndpoint, niseliffServerEndpoint }),
