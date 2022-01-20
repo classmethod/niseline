@@ -2,6 +2,7 @@
 
 import { Liff } from '@line/liff'
 import { buildCloseWindow } from './method/close-window'
+import { buildGetAId } from './method/get-a-id'
 import { buildGetAccessToken } from './method/get-access-token'
 import { buildGetContext } from './method/get-context'
 import { buildGetDecodedIdToken } from './method/get-decoded-id-token'
@@ -11,6 +12,7 @@ import { buildGetLanguage } from './method/get-language'
 import { buildGetLineVersion } from './method/get-line-version'
 import { buildGetOs } from './method/get-os'
 import { buildGetProfile } from './method/get-profile'
+import { buildGetProfilePlus } from './method/get-profile-plus'
 import { buildGetVersion } from './method/get-version'
 import { buildId } from './method/id'
 import { buildInit } from './method/init'
@@ -44,8 +46,6 @@ export const buildNiseliff = (params?: {
   isInClient?: boolean
 }): Omit<
   Liff,
-  | 'getAId'
-  | 'getProfilePlus'
   | 'getIsVideoAutoPlay'
   | 'subWindow'
   | 'isSubWindow'
@@ -68,6 +68,8 @@ export const buildNiseliff = (params?: {
   const isInClient = params?.isInClient ?? false
 
   return {
+    getAId: buildGetAId(),
+    getProfilePlus: buildGetProfilePlus(),
     id: buildId(liffId),
     ready: buildReady(),
     init: buildInit({ logger, clientEndpoint, niseliffServerEndpoint }),
