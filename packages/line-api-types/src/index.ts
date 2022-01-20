@@ -1,3 +1,4 @@
+export { LoginApiErrorResponseBody } from './login-api/error-response'
 export {
   VerifyIdTokenRequestBody,
   VerifyIdTokenResponseBody,

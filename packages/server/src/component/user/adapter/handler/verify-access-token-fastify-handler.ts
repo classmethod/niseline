@@ -1,18 +1,23 @@
 /* eslint-disable camelcase */
 
 import {
+  LoginApiErrorResponseBody,
   VerifyAccessTokenRequestQuery,
   VerifyAccessTokenResponseBody,
 } from '@niseline/line-api-types'
-import { RouteHandlerMethod } from 'fastify'
-import { ErrorResponseBody } from '../../../../util/handler'
+import { MyRouteHandlerMethod } from '../../../../util/handler'
 import {
   FindUserUseCase,
   UserNotFoundError,
 } from '../../use-case/find-user-use-case'
 
 export const buildVerifyAccessTokenFastifyHandler =
-  (findUserUseCase: FindUserUseCase): RouteHandlerMethod =>
+  (
+    findUserUseCase: FindUserUseCase
+  ): MyRouteHandlerMethod<{
+    QueryString: VerifyAccessTokenRequestQuery
+    Reply: VerifyAccessTokenResponseBody | LoginApiErrorResponseBody
+  }> =>
   async (request, reply) => {
     const accessToken = (request.query as VerifyAccessTokenRequestQuery)
       .access_token
@@ -24,7 +29,7 @@ export const buildVerifyAccessTokenFastifyHandler =
       return {
         error: 'invalid_request',
         error_description: 'access token expired',
-      } as ErrorResponseBody
+      }
     }
 
     reply.type('application/json').code(200)
@@ -32,5 +37,5 @@ export const buildVerifyAccessTokenFastifyHandler =
       scope: 'profile',
       client_id: '1440057261',
       expires_in: 2591659,
-    } as VerifyAccessTokenResponseBody
+    }
   }
