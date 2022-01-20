@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra'
-import { UserJson } from '../../component/user/adapter/repository/user-repository'
+import { UserJson } from '../component/user/adapter/repository/user-repository'
 
 export const initLowDb = () => {
   fs.mkdirpSync('./tmp')
