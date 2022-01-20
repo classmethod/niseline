@@ -1,24 +1,15 @@
 /* eslint-disable camelcase */
 
+import {
+  VerifyAccessTokenRequestQuery,
+  VerifyAccessTokenResponseBody,
+} from '@niseline/line-api-types'
 import { RouteHandlerMethod } from 'fastify'
 import { ErrorResponseBody } from '../../../../util/handler'
 import {
   FindUserUseCase,
   UserNotFoundError,
 } from '../../use-case/find-user-use-case'
-
-/**
- * https://developers.line.biz/ja/reference/line-login/#verify-access-token
- */
-interface VerifyAccessTokenRequestQuery {
-  access_token: string
-}
-
-interface VerifyAccessTokenResponseBody {
-  scope: string // 'profile'
-  client_id: string // '1440057261'
-  expires_in: number // 2591659
-}
 
 export const buildVerifyAccessTokenFastifyHandler =
   (findUserUseCase: FindUserUseCase): RouteHandlerMethod =>

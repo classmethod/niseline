@@ -1,19 +1,13 @@
+import {
+  SendReplyMessageRequestBody,
+  SendReplyMessageResponseBody,
+} from '@niseline/line-api-types'
 import { RouteHandlerMethod } from 'fastify'
 import {
   ChannelAccessTokenInvalidError,
   ReplyTokenInvalidError,
   SendReplyMessageUseCase,
 } from '../../use-case/send-reply-message-use-case'
-
-interface SendReplyMessageRequestBody {
-  replyToken: string // 'nHuyWiB7yP5Zw52FIkcQobQuGDXCTA'
-  messages: ReadonlyArray<{
-    type: string // 'text'
-    text: string // 'Hello, user'
-  }>
-}
-
-type SendReplyMessageResponseBody = {}
 
 export const buildSendReplyMessageFastifyHandler =
   ({

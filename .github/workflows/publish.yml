@@ -22,8 +22,6 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build -w packages/niseliff-sdk
-
       - run: npm run check
 
       - run: npm run build -w server

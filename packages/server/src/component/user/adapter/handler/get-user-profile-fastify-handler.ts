@@ -1,19 +1,10 @@
+import { GetUserProfileResponseBody } from '@niseline/line-api-types'
 import { RouteHandlerMethod } from 'fastify'
 import { ErrorResponseBody } from '../../../../util/handler'
 import {
   FindUserUseCase,
   UserNotFoundError,
 } from '../../use-case/find-user-use-case'
-
-/**
- * https://developers.line.biz/ja/reference/line-login/#get-user-profile
- */
-interface GetUserProfileResponseBody {
-  userId: string // 'U4af4980629...'
-  displayName: string // 'Brown'
-  pictureUrl: string // 'https://profile.line-scdn.net/abcdefghijklmn'
-  statusMessage: string // 'Hello, LINE!'
-}
 
 export const buildGetUserProfileFastifyHandler =
   (findUserUseCase: FindUserUseCase): RouteHandlerMethod =>
