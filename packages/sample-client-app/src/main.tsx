@@ -11,7 +11,7 @@ declare global {
 }
 
 // eslint-disable-next-line vars-on-top, no-var
-window.liff = buildNiseliff() as Liff
+window.liff = buildNiseliff()
 
 window.liff
   .init({
