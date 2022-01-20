@@ -15,6 +15,7 @@
     "vite",
     "vitejs",
     "devcert",
-    "tailwindcss"
+    "tailwindcss",
+    "linebot"
   ]
 }
