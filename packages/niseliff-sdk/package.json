@@ -27,5 +27,6 @@
   "bugs": {
     "url": "https://github.com/classmethod/niseline/issues"
   },
-  "homepage": "https://github.com/classmethod/niseline/#readme"
+  "homepage": "https://github.com/classmethod/niseline/#readme",
+  "description": "NiseLine is inspired by LocalStack. Goal of this tool is to create a mock service for LINE."
 }
