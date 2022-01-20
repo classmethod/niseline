@@ -6,19 +6,19 @@ NiseLine is inspired by [LocalStack](https://github.com/localstack/localstack). 
 
 ## Getting Started
 
-Launch NiseLine server.
+Launch NiseLine server by [Docker image](https://hub.docker.com/r/dyoshikawa/niseline).
 
 ```bash
 docker run -d -p 3000:3000 dyoshikawa/niseline:latest
 ```
 
-And install NiseLiff SDK.
+And install [NiseLiff SDK](https://www.npmjs.com/package/@niseline/niseliff).
 
 ```bash
 npm i @niseline/niseliff
 ```
 
-Use NiseLiff sdk in your client app!
+Use NiseLiff SDK in your client app!
 
 ```tsx
 import { buildNiseliff } from '@niseline/niseliff'
@@ -50,6 +50,8 @@ window.liff
 ## NiseLiff SDK
 
 ### Setup
+
+Install [@niseline/niseliff](https://www.npmjs.com/package/@niseline/niseliff).
 
 ```bash
 npm i @niseline/niseliff
@@ -129,6 +131,8 @@ liff.init({ liffId: 'DUMMY_LIFF_ID' }).then(() => {
 ## NiseLine Server
 
 ### Setup
+
+Pull and run [dyoshikawa/niseline](https://hub.docker.com/r/dyoshikawa/niseline).
 
 #### Docker
 
