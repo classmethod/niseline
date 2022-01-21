@@ -2,7 +2,7 @@ import {
   SendReplyMessageRequestBody,
   SendReplyMessageResponseBody,
 } from '@niseline/line-api-types'
-import { RouteHandlerMethod } from 'fastify'
+import { MyRouteHandlerMethod } from '../../../../util/handler'
 import {
   ChannelAccessTokenInvalidError,
   ReplyTokenInvalidError,
@@ -14,10 +14,13 @@ export const buildSendReplyMessageFastifyHandler =
     sendReplyMessageUseCase,
   }: {
     sendReplyMessageUseCase: SendReplyMessageUseCase
-  }): RouteHandlerMethod =>
+  }): MyRouteHandlerMethod<{
+    Body: SendReplyMessageRequestBody
+    Reply: SendReplyMessageResponseBody
+  }> =>
   async (request, reply) => {
     const [, channelAccessToken] = request.headers.authorization!.split(' ')
-    const requestBody = request.body as SendReplyMessageRequestBody
+    const requestBody = request.body
 
     const sendReplyMessageUseCaseResult = await sendReplyMessageUseCase({
       channelAccessToken,
@@ -41,5 +44,5 @@ export const buildSendReplyMessageFastifyHandler =
     }
 
     reply.type('application/json').code(200)
-    return {} as SendReplyMessageResponseBody
+    return {}
   }
