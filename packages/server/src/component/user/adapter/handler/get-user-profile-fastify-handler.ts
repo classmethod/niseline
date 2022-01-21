@@ -1,13 +1,19 @@
-import { GetUserProfileResponseBody } from '@niseline/line-api-types'
-import { RouteHandlerMethod } from 'fastify'
-import { ErrorResponseBody } from '../../../../util/handler'
+import {
+  GetUserProfileResponseBody,
+  LoginApiErrorResponseBody,
+} from '@niseline/line-api-types'
+import { MyRouteHandlerMethod } from '../../../../util/handler'
 import {
   FindUserUseCase,
   UserNotFoundError,
 } from '../../use-case/find-user-use-case'
 
 export const buildGetUserProfileFastifyHandler =
-  (findUserUseCase: FindUserUseCase): RouteHandlerMethod =>
+  (
+    findUserUseCase: FindUserUseCase
+  ): MyRouteHandlerMethod<{
+    Reply: GetUserProfileResponseBody | LoginApiErrorResponseBody
+  }> =>
   async (request, reply) => {
     const [, accessToken] = request.headers.authorization!.split(' ')
 
@@ -18,7 +24,7 @@ export const buildGetUserProfileFastifyHandler =
       return {
         error: 'invalid_request',
         error_description: 'access token expired',
-      } as ErrorResponseBody
+      }
     }
 
     reply.type('application/json').code(200)
@@ -27,5 +33,5 @@ export const buildGetUserProfileFastifyHandler =
       displayName: 'Brown',
       pictureUrl: showUserResult.picture,
       statusMessage: 'Hello, NiseLine!',
-    } as GetUserProfileResponseBody
+    }
   }
