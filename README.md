@@ -231,7 +231,7 @@ curl -v -X POST 'http://localhost:3000/oauth2/v2.1/verify' \
 
 - [x] [Send reply message](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)
 - [x] [Send push message](https://developers.line.biz/ja/reference/messaging-api/#send-push-message)
-- [ ] [Send multicast message](https://developers.line.biz/ja/reference/messaging-api/#send-multicast-message)
+- [x] [Send multicast message](https://developers.line.biz/ja/reference/messaging-api/#send-multicast-message)
 - [ ] [Send narrowcast message](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-message)
 - [ ] [Get narrowcast progress status](https://developers.line.biz/ja/reference/messaging-api/#get-narrowcast-progress-status)
 - [ ] [Send broadcast message](https://developers.line.biz/ja/reference/messaging-api/#send-broadcast-message)
