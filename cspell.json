@@ -17,6 +17,7 @@
     "vitejs",
     "devcert",
     "tailwindcss",
-    "linebot"
+    "linebot",
+    "narrowcast"
   ]
 }
