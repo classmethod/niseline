@@ -1,7 +1,7 @@
 /**
  * https://developers.line.biz/ja/reference/messaging-api/#send-multicast-message
  */
-export interface SendMulticastMessagesRequestBody {
+export interface SendMulticastMessageRequestBody {
   to: ReadonlyArray<string>
   messages: ReadonlyArray<{
     type: string
@@ -9,4 +9,4 @@ export interface SendMulticastMessagesRequestBody {
   }>
   notificationDisabled: boolean // default: false
 }
-export type SendMulticastMessagesResponseBody = {}
+export type SendMulticastMessageResponseBody = {}

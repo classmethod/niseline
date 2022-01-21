@@ -36,7 +36,7 @@ export const buildSendPushMessageFastifyHandler =
     if (sendPushMessageUseCaseResult instanceof UserIdInvalidError) {
       reply.type('application/json').code(400)
       return {
-        message: 'Invalid reply token',
+        message: 'Invalid user ID',
       }
     }
 
