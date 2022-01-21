@@ -15,12 +15,11 @@ export const buildVerifyAccessTokenFastifyHandler =
   (
     findUserUseCase: FindUserUseCase
   ): MyRouteHandlerMethod<{
-    QueryString: VerifyAccessTokenRequestQuery
+    Querystring: VerifyAccessTokenRequestQuery
     Reply: VerifyAccessTokenResponseBody | LoginApiErrorResponseBody
   }> =>
   async (request, reply) => {
-    const accessToken = (request.query as VerifyAccessTokenRequestQuery)
-      .access_token
+    const { access_token: accessToken } = request.query
 
     const showUserResult = await findUserUseCase(accessToken)
 
