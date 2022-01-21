@@ -2,7 +2,7 @@ import {
   SendPushMessageRequestBody,
   SendPushMessageResponseBody,
 } from '@niseline/line-api-types'
-import { RouteHandlerMethod } from 'fastify'
+import { MyRouteHandlerMethod } from '../../../../util/handler'
 import {
   UserIdInvalidError,
   SendPushMessageUseCase,
@@ -14,10 +14,13 @@ export const buildSendPushMessageFastifyHandler =
     sendPushMessageUseCase,
   }: {
     sendPushMessageUseCase: SendPushMessageUseCase
-  }): RouteHandlerMethod =>
+  }): MyRouteHandlerMethod<{
+    Body: SendPushMessageRequestBody
+    Reply: SendPushMessageResponseBody
+  }> =>
   async (request, reply) => {
     const [, channelAccessToken] = request.headers.authorization!.split(' ')
-    const requestBody = request.body as SendPushMessageRequestBody
+    const requestBody = request.body
 
     const sendPushMessageUseCaseResult = await sendPushMessageUseCase({
       channelAccessToken,
@@ -41,5 +44,5 @@ export const buildSendPushMessageFastifyHandler =
     }
 
     reply.type('application/json').code(200)
-    return {} as SendPushMessageResponseBody
+    return {}
   }
