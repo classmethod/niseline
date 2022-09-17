@@ -1,6 +1,0 @@
-node_modules
-.eslintrc.json
-.eslintignore
-tsconfig.json
-.eslintcache
-src

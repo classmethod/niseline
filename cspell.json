@@ -1,6 +1,7 @@
 {
   "words": [
-    "fastify",
+    "aspida",
+    "codegen",
     "niseline",
     "niseliff",
     "dyoshikawa",
@@ -8,6 +9,7 @@
     "esbuild",
     "inversify",
     "liff",
+    "openapi",
     "outfile",
     "formbody",
     "camelcase",
