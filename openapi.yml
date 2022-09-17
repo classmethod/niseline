@@ -12,18 +12,35 @@ servers:
 paths:
   /niseline/api/ping:
     get:
-      operationId: niseline.api.ping
-      description: Ping
+      operationId: niseline.api.ping.get
+      description: Ping.
       responses:
         '200':
-          description: For ping.
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResult'
+  /niseline/api/users:
+    put:
+      operationId: niseline.api.users.put
+      description: Save user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserParams'
+      responses:
+        '200':
+          description: OK.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResult'
   /oauth2/v2.1/verify:
     get:
-      operationId: oauth2.v2.1.verify
+      operationId: oauth2.v2.1.verify.get
       description: ''
       parameters:
         - name: verifyAccessTokenParams
@@ -37,6 +54,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifyAccessTokenResult'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+    post:
+      operationId: oauth2.v2.1.verify.post
+      description: ''
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyIdTokenParams'
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyIdTokenResult'
         '400':
           description: Bad request.
           content:
@@ -67,13 +106,42 @@ components:
           example: access token expired
       required:
         - message
+    SaveUserParams:
+      description: Save a user params.
+      type: object
+      properties:
+        id:
+          type: string
+          example: Error
+        accessToken:
+          type: string
+          example: XXXXXX
+        idToken:
+          type: string
+          example: XXXXXX
+        email:
+          type: string
+          example: taro.niseline@example.com
+        name:
+          type: string
+          example: Taro Niseline
+        picture:
+          type: string
+          example: https://example.com/aBcdefg123456
+      required:
+        - id
+        - accessToken
+        - idToken
+        - email
+        - name
+        - picture
     VerifyAccessTokenParams:
       type: object
       properties:
         access_token:
           type: string
           description: Set target user id instead of an access token.
-          example: U123
+          example: U1234567890abcdef1234567890abcdef
       required:
         - access_token
     VerifyAccessTokenResult:
@@ -93,3 +161,60 @@ components:
         - scope
         - client_id
         - expires_in
+    VerifyIdTokenParams:
+      description: Verification id token params.
+      type: object
+      properties:
+        id_token:
+          type: string
+          example: XXXXXXXXXXX
+        client_id:
+          type: string
+          example: 1234567890
+      required:
+        - id_token
+        - client_id
+    VerifyIdTokenResult:
+      description: Verification id token result.
+      type: object
+      properties:
+        iss:
+          type: string
+          example: https://example.com
+        sub:
+          type: string
+          example: U1234567890abcdef1234567890abcdef
+        aud:
+          type: string
+          example: 1234567890
+        exp:
+          type: number
+          example: 1504169092
+        iat:
+          type: number
+          example: 1504263657
+        nonce:
+          type: string
+          example: 0987654asdf
+        amr:
+          type: array
+          items:
+            type: string
+          example: [pwd]
+        name:
+          type: string
+          example: Taro Niseline
+        picture:
+          type: string
+          example: https://example.com/aBcdefg123456
+        email:
+          type: string
+          example: taro.niseline@example.com
+      required:
+        - iss
+        - sub
+        - aud
+        - exp
+        - iat
+        - nonce
+        - amr

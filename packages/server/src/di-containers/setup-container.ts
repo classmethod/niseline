@@ -1,11 +1,15 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 import { Container } from 'inversify'
-import { UserDdbRepository } from '../repositories/user-ddb-repository'
+import { UserDdbRepository } from '../infrastructures/repositories/user-ddb-repository'
 import { ConsoleLogger } from '../utils/logger'
 import * as serviceIds from './service-ids'
 
-export const setupContainer = (): Container => {
+export const setupContainer = ({
+  ddbClient,
+}: {
+  ddbClient?: DynamoDBClient
+}): Container => {
   const container = new Container()
   container
     .bind(serviceIds.USERS_TABLE_NAME)
@@ -14,7 +18,7 @@ export const setupContainer = (): Container => {
   container.bind(serviceIds.LOGGER).toDynamicValue(() => new ConsoleLogger())
   container
     .bind(serviceIds.DDB_CLIENT)
-    .toDynamicValue(() => new DynamoDBClient({}))
+    .toDynamicValue(() => ddbClient ?? new DynamoDBClient({}))
   container
     .bind(serviceIds.DDB_DOC_CLIENT)
     .toDynamicValue((context) =>

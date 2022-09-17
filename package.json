@@ -46,8 +46,10 @@
     "npm": "8.19.2"
   },
   "lint-staged": {
+    "*": [
+      "bash -c 'npm run lint:secret'"
+    ],
     "*.{js,ts,jsx,tsx}": [
-      "bash -c 'npm run lint:secret'",
       "bash -c 'npm run format'",
       "bash -c 'npm run lint:js:fix --workspaces'",
       "bash -c 'npm run typec --workspaces'"

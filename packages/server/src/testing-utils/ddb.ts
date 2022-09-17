@@ -1,4 +1,6 @@
 import {
+  CreateTableCommand,
+  CreateTableCommandInput,
   DeleteTableCommand,
   DynamoDBClient,
   ListTablesCommand,
@@ -16,20 +18,79 @@ export const buildLocalDdbClient = ({
     endpoint: endpoint ?? 'http://localhost:8000',
   })
 
-export const refreshUsersTable = async ({
+export const buildUsersTableDef = (
+  tableName: string
+): CreateTableCommandInput => ({
+  TableName: tableName,
+  KeySchema: [
+    {
+      AttributeName: 'id',
+      KeyType: 'HASH',
+    },
+  ],
+  AttributeDefinitions: [
+    {
+      AttributeName: 'id',
+      AttributeType: 'S',
+    },
+    {
+      AttributeName: 'accessToken',
+      AttributeType: 'S',
+    },
+    {
+      AttributeName: 'idToken',
+      AttributeType: 'S',
+    },
+  ],
+  GlobalSecondaryIndexes: [
+    {
+      IndexName: 'accessTokenIndex',
+      KeySchema: [
+        {
+          AttributeName: 'accessToken',
+          KeyType: 'HASH',
+        },
+      ],
+      Projection: {
+        ProjectionType: 'ALL',
+      },
+    },
+    {
+      IndexName: 'idTokenIndex',
+      KeySchema: [
+        {
+          AttributeName: 'idToken',
+          KeyType: 'HASH',
+        },
+      ],
+      Projection: {
+        ProjectionType: 'ALL',
+      },
+    },
+  ],
+  BillingMode: 'PAY_PER_REQUEST',
+})
+
+export const refreshDdbTable = async ({
   ddbClient,
   tableName,
+  tableDef,
 }: {
   ddbClient: DynamoDBClient
   tableName: string
+  tableDef: CreateTableCommandInput
 }) => {
   const { TableNames: tableNames = [] } = await ddbClient.send(
     new ListTablesCommand({})
   )
   const foundTableName = tableNames.find((t) => t === tableName)
-  await ddbClient.send(
-    new DeleteTableCommand({
-      TableName: foundTableName,
-    })
-  )
+  if (foundTableName != null) {
+    await ddbClient.send(
+      new DeleteTableCommand({
+        TableName: foundTableName,
+      })
+    )
+  }
+
+  await ddbClient.send(new CreateTableCommand(tableDef))
 }
