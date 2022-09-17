@@ -7,10 +7,11 @@ import * as serviceIds from './service-ids'
 
 export const setupContainer = (): Container => {
   const container = new Container()
-  container.bind(serviceIds.LOGGER).toDynamicValue(() => new ConsoleLogger())
   container
     .bind(serviceIds.USERS_TABLE_NAME)
-    .toDynamicValue(() => process.env.USERS_TABLE_NAME!)
+    .toDynamicValue(() => process.env.USERS_TABLE_NAME ?? 'users')
+
+  container.bind(serviceIds.LOGGER).toDynamicValue(() => new ConsoleLogger())
   container
     .bind(serviceIds.DDB_CLIENT)
     .toDynamicValue(() => new DynamoDBClient({}))
