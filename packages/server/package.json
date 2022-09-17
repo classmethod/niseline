@@ -14,20 +14,19 @@
   "author": "dyoshikawa",
   "license": "MIT",
   "dependencies": {
-    "@niseline/line-api-types": "file:packages/line-api-types",
+    "@aws-sdk/client-dynamodb": "3.172.0",
+    "@aws-sdk/lib-dynamodb": "3.172.0",
     "aspida": "1.11.0",
     "cors": "2.8.5",
-    "ejs": "3.1.6",
-    "fastify": "3.25.3",
-    "fastify-cors": "6.0.2",
-    "fastify-formbody": "5.2.0",
+    "express-openapi-validator": "4.13.8",
     "fs-extra": "10.0.0",
     "inversify": "6.0.1",
     "lowdb": "3.0.0",
     "point-of-view": "5.0.0",
     "reflect-metadata": "0.1.13",
     "source-map-support": "0.5.21",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "zod": "3.19.1"
   },
   "devDependencies": {
     "@types/cors": "2.8.12",

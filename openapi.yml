@@ -16,18 +16,82 @@ paths:
       description: Ping
       responses:
         '200':
-          description: Ping
+          description: For ping.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResult'
+  /oauth2/v2.1/verify:
+    get:
+      operationId: oauth2.v2.1.verify
+      description: ""
+      parameters:
+        - name: verifyAccessTokenParams
+          in: query
+          schema:
+            $ref: '#/components/schemas/VerifyAccessTokenParams'
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyAccessTokenResult'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+            
 
 components:
   schemas:
     MessageResult:
-      description: メッセージ結果
+      description: Message result.
       type: object
       properties:
         message:
           type: string
           example: Pong.
+      required:
+        - message
+    ErrorResult:
+      description: Error result.
+      type: object
+      properties:
+        error:
+          type: string
+          example: invalid_request
+        error_description:
+          type: string
+          example: access token expired
+      required:
+        - message
+    VerifyAccessTokenParams:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Set target user id instead of an access token.
+          example: U123
+      required:
+        - access_token
+    VerifyAccessTokenResult:
+      description: Verification access token result.
+      type: object
+      properties:
+        scope:
+          type: string
+          example: profile
+        client_id:
+          type: string
+          example: 1234567890
+        expires_in:
+          type: number
+          example: 2591659
+      required:
+        - scope
+        - client_id
+        - expires_in
+

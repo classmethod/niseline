@@ -8,13 +8,11 @@
   "license": "MIT",
   "scripts": {
     "build": "docker build -t dyoshikawa/niseline:latest .",
-    "build:ws": "npm run build -w packages/niseliff-sdk -w packages/line-api-types",
     "publish": "docker push dyoshikawa/niseline:latest",
     "format": "prettier --write .",
     "format:check": "prettier -c .",
     "lint:secret": "secretlint '**/*'",
-    "prepare": "husky install && npm run build:ws",
-    "postinstall": "npm run prepare",
+    "prepare": "husky install",
     "check": "npm run lint:secret && npm run format:check && npm run lint:js --workspaces && npm run build:ws && npm run typec --workspaces",
     "start:client": "npm run build -w packages/niseliff-sdk && npm run start -w sample-client-app",
     "start:server": "npm run build -w packages/line-api-types && npm run start -w server",
@@ -25,6 +23,7 @@
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "4.1.4",
     "@tsconfig/recommended": "1.0.1",
+    "@tsconfig/strictest": "1.0.1",
     "@types/express": "4.17.14",
     "@typescript-eslint/eslint-plugin": "5.9.1",
     "@typescript-eslint/parser": "5.9.1",
