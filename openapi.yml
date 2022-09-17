@@ -16,7 +16,7 @@ paths:
       description: Ping
       responses:
         '200':
-          description: サーバーは正常に動作しています
+          description: Ping
           content:
             application/json:
               schema:
