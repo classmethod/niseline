@@ -31,13 +31,3 @@ components:
         message:
           type: string
           example: Pong.
-    get_health_response:
-      description: GetHealthResponse
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-            - ok
-      required:
-        - status
