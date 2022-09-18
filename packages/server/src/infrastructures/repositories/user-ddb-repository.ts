@@ -9,7 +9,7 @@ import { UserRepository } from '../../models/user/user-repository'
 import { UserDdbItem, userDdbItemSchema } from '../ddb-item-schemas'
 
 const userDdbItemToUser = (userDdbItem: UserDdbItem): User => {
-  const [channelId, id] = userDdbItem.channelUserId.split('#')
+  const [channelId, id] = userDdbItem.id.split('#')
   return {
     id,
     accessToken: userDdbItem.accessToken,
@@ -22,7 +22,7 @@ const userDdbItemToUser = (userDdbItem: UserDdbItem): User => {
 }
 
 const userDdbItemFromUser = (user: User): UserDdbItem => ({
-  channelUserId: [user.channelId, user.id].join('#'),
+  id: [user.channelId, user.id].join('#'),
   accessToken: user.accessToken,
   idToken: user.idToken,
   email: user.email,
@@ -52,10 +52,11 @@ export class UserDdbRepository implements UserRepository {
   }
 
   async save(user: User): Promise<void> {
+    const item = userDdbItemSchema.parse(userDdbItemFromUser(user))
     await this.ddbDocClient.send(
       new PutCommand({
         TableName: this.usersTableName,
-        Item: userDdbItemSchema.parse(userDdbItemFromUser(user)),
+        Item: item,
       })
     )
   }

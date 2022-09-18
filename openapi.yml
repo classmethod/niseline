@@ -21,10 +21,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResult'
-  /niseline/api/users:
-    put:
-      operationId: niseline.api.users.put
+  /niseline/api/channels/{channelId}/users:
+    post:
+      operationId: niseline.api.users.post
       description: Save user.
+      parameters:
+        - name: channelId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 1234567890
       requestBody:
         required: true
         content:
@@ -91,7 +98,7 @@ components:
       properties:
         message:
           type: string
-          example: Pong.
+          example: OK.
       required:
         - message
     ErrorResult:
@@ -112,7 +119,7 @@ components:
       properties:
         id:
           type: string
-          example: Error
+          example: U1234567890abcdef1234567890abcdef
         accessToken:
           type: string
           example: XXXXXX
@@ -121,6 +128,7 @@ components:
           example: XXXXXX
         email:
           type: string
+          format: email
           example: taro.niseline@example.com
         name:
           type: string

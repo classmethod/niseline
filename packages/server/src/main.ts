@@ -51,43 +51,64 @@ const main = async () => {
    * NiseLine Original API
    */
   app.get('/niseline/api/ping', (_req, res) => {
-    const responseBody: MessageResult = {
+    const resBody: MessageResult = {
       message: 'Pong.',
     }
-    return res.send(responseBody)
+    return res.send(resBody)
   })
 
-  app.put('/niseline/api/users', async (req, res) => {
+  app.post('/niseline/api/channels/:channelId/users', async (req, res) => {
     const logger = container.get<Logger>(serviceIds.LOGGER)
     try {
       const userRepository = container.get<UserRepository>(
         serviceIds.USER_REPOSITORY
       )
       const reqBody: SaveUserParams = req.body
+      const { channelId } = req.params
 
-      const user = await userRepository.save({
+      await userRepository.save({
         id: reqBody.id,
         accessToken: reqBody.accessToken,
         idToken: reqBody.idToken,
         email: reqBody.email,
         name: reqBody.name,
         picture: reqBody.picture,
-        channelId: '',
+        channelId,
       })
-      if (user == null) {
-        const errorResult: ErrorResult = {
-          error: 'invalid_request',
-          error_description: 'access token expired',
-        }
-        return res.status(400).send(errorResult)
-      }
 
-      const responseBody: VerifyAccessTokenResult = {
-        scope: 'profile',
-        client_id: '1234567890',
-        expires_in: 2591659,
+      const resBody: MessageResult = {
+        message: 'OK.',
       }
-      return res.send(responseBody)
+      return res.send(resBody)
+    } catch (e: unknown) {
+      logger.error({ error: errorToJson(e as Error) })
+      return res.status(500).send({})
+    }
+  })
+
+  app.post('/niseline/api/channels/:channelId/users', async (req, res) => {
+    const logger = container.get<Logger>(serviceIds.LOGGER)
+    try {
+      const userRepository = container.get<UserRepository>(
+        serviceIds.USER_REPOSITORY
+      )
+      const reqBody: SaveUserParams = req.body
+      const { channelId } = req.params
+
+      await userRepository.save({
+        id: reqBody.id,
+        accessToken: reqBody.accessToken,
+        idToken: reqBody.idToken,
+        email: reqBody.email,
+        name: reqBody.name,
+        picture: reqBody.picture,
+        channelId,
+      })
+
+      const resBody: MessageResult = {
+        message: 'OK.',
+      }
+      return res.send(resBody)
     } catch (e: unknown) {
       logger.error({ error: errorToJson(e as Error) })
       return res.status(500).send({})
@@ -119,12 +140,12 @@ const main = async () => {
         return res.status(400).send(errorResult)
       }
 
-      const responseBody: VerifyAccessTokenResult = {
+      const resBody: VerifyAccessTokenResult = {
         scope: 'profile',
         client_id: '1234567890',
         expires_in: 2591659,
       }
-      return res.send(responseBody)
+      return res.send(resBody)
     } catch (e: unknown) {
       logger.error({ error: errorToJson(e as Error) })
       return res.status(500).send({})
@@ -149,7 +170,7 @@ const main = async () => {
         return res.status(400).send(errorResult)
       }
 
-      const responseBody: VerifyIdTokenResult = {
+      const resBody: VerifyIdTokenResult = {
         iss: 'http://example.com',
         sub: user.id,
         aud: '1234567890',
@@ -161,7 +182,7 @@ const main = async () => {
         picture: user.picture,
         email: user.email,
       }
-      return res.send(responseBody)
+      return res.send(resBody)
     } catch (e: unknown) {
       logger.error({ error: errorToJson(e as Error) })
       return res.status(500).send({})
