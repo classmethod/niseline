@@ -18,6 +18,25 @@ export const buildLocalDdbClient = ({
     endpoint: endpoint ?? 'http://localhost:8000',
   })
 
+export const buildChannelsTableDef = (
+  tableName: string
+): CreateTableCommandInput => ({
+  TableName: tableName,
+  KeySchema: [
+    {
+      AttributeName: 'id',
+      KeyType: 'HASH',
+    },
+  ],
+  AttributeDefinitions: [
+    {
+      AttributeName: 'id',
+      AttributeType: 'S',
+    },
+  ],
+  BillingMode: 'PAY_PER_REQUEST',
+})
+
 export const buildUsersTableDef = (
   tableName: string
 ): CreateTableCommandInput => ({

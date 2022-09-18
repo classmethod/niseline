@@ -21,10 +21,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResult'
+  /niseline/api/channels:
+    post:
+      operationId: niseline.api.channels.post
+      description: Save a channel.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveChannelParams'
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResult'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
   /niseline/api/channels/{channelId}/users:
     post:
-      operationId: niseline.api.users.post
-      description: Save user.
+      operationId: niseline.api.channels.channelId.users.post
+      description: Save a user.
       parameters:
         - name: channelId
           in: path
@@ -45,6 +68,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResult'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
   /oauth2/v2.1/verify:
     get:
       operationId: oauth2.v2.1.verify.get
@@ -113,6 +142,15 @@ components:
           example: access token expired
       required:
         - message
+    SaveChannelParams:
+      description: Save a channel params.
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234567890
+      required:
+        - id
     SaveUserParams:
       description: Save a user params.
       type: object

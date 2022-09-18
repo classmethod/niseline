@@ -7,14 +7,17 @@ import { setupContainer } from './di-containers/setup-container'
 import {
   ErrorResult,
   MessageResult,
+  SaveChannelParams,
   SaveUserParams,
   VerifyAccessTokenParams,
   VerifyAccessTokenResult,
   VerifyIdTokenParams,
   VerifyIdTokenResult,
 } from './generated/api/@types'
+import { ChannelRepository } from './models/channel/channel-repository'
 import { UserRepository } from './models/user/user-repository'
 import {
+  buildChannelsTableDef,
   buildLocalDdbClient,
   buildUsersTableDef,
   refreshDdbTable,
@@ -25,6 +28,13 @@ import { Logger } from './utils/logger'
 const main = async () => {
   const ddbClient = buildLocalDdbClient({})
   const container = setupContainer({ ddbClient })
+  await refreshDdbTable({
+    ddbClient,
+    tableName: container.get<string>(serviceIds.CHANNELS_TABLE_NAME),
+    tableDef: buildChannelsTableDef(
+      container.get<string>(serviceIds.CHANNELS_TABLE_NAME)
+    ),
+  })
   await refreshDdbTable({
     ddbClient,
     tableName: container.get<string>(serviceIds.USERS_TABLE_NAME),
@@ -50,6 +60,7 @@ const main = async () => {
   /**
    * NiseLine Original API
    */
+  // Ping
   app.get('/niseline/api/ping', (_req, res) => {
     const resBody: MessageResult = {
       message: 'Pong.',
@@ -57,23 +68,17 @@ const main = async () => {
     return res.send(resBody)
   })
 
-  app.post('/niseline/api/channels/:channelId/users', async (req, res) => {
+  // Save a channel
+  app.post('/niseline/api/channels', async (req, res) => {
     const logger = container.get<Logger>(serviceIds.LOGGER)
     try {
-      const userRepository = container.get<UserRepository>(
-        serviceIds.USER_REPOSITORY
+      const channelRepository = container.get<ChannelRepository>(
+        serviceIds.CHANNEL_REPOSITORY
       )
-      const reqBody: SaveUserParams = req.body
-      const { channelId } = req.params
+      const reqBody: SaveChannelParams = req.body
 
-      await userRepository.save({
+      await channelRepository.save({
         id: reqBody.id,
-        accessToken: reqBody.accessToken,
-        idToken: reqBody.idToken,
-        email: reqBody.email,
-        name: reqBody.name,
-        picture: reqBody.picture,
-        channelId,
       })
 
       const resBody: MessageResult = {
@@ -86,14 +91,27 @@ const main = async () => {
     }
   })
 
+  // Save a user
   app.post('/niseline/api/channels/:channelId/users', async (req, res) => {
     const logger = container.get<Logger>(serviceIds.LOGGER)
     try {
+      const channelRepository = container.get<ChannelRepository>(
+        serviceIds.CHANNEL_REPOSITORY
+      )
       const userRepository = container.get<UserRepository>(
         serviceIds.USER_REPOSITORY
       )
       const reqBody: SaveUserParams = req.body
       const { channelId } = req.params
+
+      const channel = await channelRepository.findById(channelId)
+      if (channel == null) {
+        const resBody: ErrorResult = {
+          error: 'invalid_save_user_params',
+          error_description: 'Not found channel by channel id of your params.',
+        }
+        return res.status(400).send(resBody)
+      }
 
       await userRepository.save({
         id: reqBody.id,
@@ -102,7 +120,7 @@ const main = async () => {
         email: reqBody.email,
         name: reqBody.name,
         picture: reqBody.picture,
-        channelId,
+        channelId: channel.id,
       })
 
       const resBody: MessageResult = {
