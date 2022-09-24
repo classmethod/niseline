@@ -9,7 +9,7 @@
     "lint:js": "eslint --cache '**/*.{js,ts}'",
     "lint:js:fix": "eslint --cache --fix '**/*.{js,ts}'",
     "typec": "tsc --noEmit",
-    "codegen": "rm -rf src/generated/api && openapi2aspida -i ../../openapi.yml -o src/generated/api"
+    "codegen": "openapi2aspida -i ../../openapi.yml -o src/generated/api"
   },
   "author": "dyoshikawa",
   "license": "MIT",

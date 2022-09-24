@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier -c .",
     "lint:secret": "secretlint '**/*'",
-    "prepare": "husky install",
+    "prepare": "husky install && npm run codegen -w server",
     "check": "npm run lint:secret && npm run format:check && npm run lint:js --workspaces && npm run build:ws && npm run typec --workspaces",
     "start:client": "npm run build -w packages/niseliff-sdk && npm run start -w sample-client-app",
     "start:server": "npm run build -w packages/line-api-types && npm run start -w server",
