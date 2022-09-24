@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  niseline:
-    image: dyoshikawa/niseline:latest
-    ports:
-      - 3000:3000
+  # niseline:
+  #   image: dyoshikawa/niseline:latest
+  #   ports:
+  #     - 3000:3000
   dynamodb:
     image: amazon/dynamodb-local:latest
     command: -jar DynamoDBLocal.jar -sharedDb -dbPath . -optimizeDbBeforeStartup

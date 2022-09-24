@@ -166,7 +166,6 @@ components:
           example: XXXXXX
         email:
           type: string
-          format: email
           example: taro.niseline@example.com
         name:
           type: string
