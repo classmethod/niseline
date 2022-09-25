@@ -9,12 +9,7 @@ export { SaveChannelParams } from './generated/api/@types'
 
 export type SaveUserParams = SaveUserParamsBody & { channelId: string }
 
-export interface NiselineClient {
-  saveChannel: (params: SaveChannelParams) => Promise<void>
-  saveUser: (params: SaveUserParams) => Promise<void>
-}
-
-export class NiselineClientImpl implements NiselineClient {
+export class NiselineClient {
   private readonly apiUrl: string
 
   constructor({ apiUrl }: { apiUrl: string }) {
