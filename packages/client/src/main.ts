@@ -1,4 +1,3 @@
-import 'source-map-support/register'
 import { fetch } from 'cross-fetch'
 import {
   SaveChannelParams as SaveChannelParamsBody,
