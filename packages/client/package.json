@@ -5,7 +5,7 @@
   "private": false,
   "scripts": {
     "prepare": "npm run build",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "lint:js": "eslint --cache '**/*.{js,ts}'",
     "lint:js:fix": "eslint --cache --fix '**/*.{js,ts}'",
     "typec": "tsc --noEmit",
@@ -26,7 +26,8 @@
     "eslint-config-prettier": "8.3.0"
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/types"
   ],
   "main": "./dist/niseline-client.umd.js",
   "module": "./dist/niseline-client.es.js",
@@ -35,5 +36,6 @@
       "import": "./dist/niseline-client.es.js",
       "require": "./dist/niseline-client.umd.js"
     }
-  }
+  },
+  "types": "./types/main.d.ts"
 }
