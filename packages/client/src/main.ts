@@ -1,12 +1,11 @@
 import 'source-map-support/register'
 import { fetch } from 'cross-fetch'
 import {
-  SaveChannelParams,
+  SaveChannelParams as SaveChannelParamsBody,
   SaveUserParams as SaveUserParamsBody,
 } from './generated/api/@types'
 
-export { SaveChannelParams } from './generated/api/@types'
-
+export type SaveChannelParams = SaveChannelParamsBody
 export type SaveUserParams = SaveUserParamsBody & { channelId: string }
 
 export class NiselineClient {
